@@ -45,6 +45,13 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod());
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -90,7 +97,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAllOrigins");
 app.UseAuthentication();   // <-- agregado
 app.UseAuthorization();
 

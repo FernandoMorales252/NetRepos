@@ -18,9 +18,9 @@ namespace AuthApi.Repositorios
             _usuarioRepo = usuarioRepo;
             _config = config;
         }
+
         public async Task<UsuarioRespuestaDTO> RegistrarAsync(UsuarioRegistroDTO dto)
-        {
-            // Crear el usuario con RolId
+        { // Crear el usuario con RolId
             var usuario = new Usuarios
             {
                 Nombre = dto.Nombre,
@@ -28,7 +28,6 @@ namespace AuthApi.Repositorios
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 RolId = 2 // Usuario por defecto
             };
-
             // Guardar en la base de datos
             await _usuarioRepo.AddAsync(usuario);
 
@@ -48,13 +47,14 @@ namespace AuthApi.Repositorios
             };
 
         }
+
         public async Task<UsuarioRespuestaDTO> LoginAsync(UsuarioLoginDTO dto)
         {
             var usuario = await _usuarioRepo.GetByEmailAsync(dto.Email);
-            if (usuario == null) return null!;
+            if (usuario == null) return null;
 
             if (!BCrypt.Net.BCrypt.Verify(dto.Password, usuario.Password))
-                return null!;
+                return null;
 
             return new UsuarioRespuestaDTO
             {

@@ -16,7 +16,7 @@ namespace AuthApi.Controllers
         }
 
         [HttpGet("usuarios")]
-        [Authorize] // Solo usuarios autenticados
+        [Authorize]
         public async Task<IActionResult> GetUsuarios()
         {
             var usuarios = await usuarioRepository.GetAllUsuariosAsync();

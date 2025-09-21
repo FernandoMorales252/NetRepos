@@ -3,7 +3,7 @@ using AuthApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthApi.Controllers
-{
+{ 
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -21,6 +21,7 @@ namespace AuthApi.Controllers
             var result = await _authService.RegistrarAsync(dto);
             return Ok(result);
         }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UsuarioLoginDTO dto)
         {
