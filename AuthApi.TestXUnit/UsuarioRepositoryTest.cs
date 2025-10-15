@@ -63,7 +63,7 @@ namespace AuthApi.TestXUnit
             var context = GetInMemoryDbContext();
             var repo = new UsuarioRepository(context);
 
-            var muevousuario = new Usuarios()
+            var nuevousuario = new Usuarios()
             {
                 Nombre = "Maria",
                 Email = "Maria@gmail.com",
@@ -73,11 +73,26 @@ namespace AuthApi.TestXUnit
             };
 
             //Act
-            await repo.AddAsync(muevousuario);
+            await repo.AddAsync(nuevousuario);
             //Assert
             var usuarioGuardado = await context.Usuarios.FirstOrDefaultAsync(u => u.Email == "Maria@gmail.com");
             Assert.NotNull(usuarioGuardado);
             Assert.Equal("Maria", usuarioGuardado.Nombre);
+        }
+
+        [Fact]
+        public async Task GetAllAsync_AllUserReturn()
+        {
+            //Arrange
+            var context = GetInMemoryDbContext();
+            var repo = new UsuarioRepository(context);
+
+            //Act
+            var lista = await repo.GetAllUsuariosAsync(); 
+
+            //Assert
+            Assert.NotEmpty(lista);
+            Assert.Contains(lista,u=> u.Email == "Fernando@123");
         }
 
     }
